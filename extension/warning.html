@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>.ZIP Warning</title>
+  <style>
+    body {
+      background-color: #1a1a1a;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .blocked-url {
+  background-color: #333333;
+  color: #ffffff;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 18px;
+      margin-bottom: 30px;
+      margin-left: 30px;
+      margin-right: 30px
+    }
+
+    #continueButton {
+      background-color: #ff3b30;
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #continueButton:hover {
+      background-color: #ff1e13;
+    }
+  </style>
+</head>
+<body>
+  <h1>Warning .ZIP Domain</h1>
+  <div class="blocked-url">
+    <p id="blockedUrl"></p>
+  </div>
+  <p>Warning, you are going to a .zip domain. If you are trying to download a .zip folder then this is most likley a phishing attempt.</p>
+  <p>".zip" domains can be problematic due to the potential confusion they create with ".zip" folders. This similarity in naming can be exploited by malicious actors to conduct phishing attacks. Users should exercise caution and verify the authenticity of websites they visit, especially when dealing with sensitive information or engaging in online transactions. Taking a moment to check for secure connections, validating website URLs, and confirming the credibility of sources can help users avoid falling victim to scams and protect their personal and financial information.</p>
+  <button id="continueButton">I Understand</button>
+
+  <script src="warning.js"></script>
+</body>
+</html>

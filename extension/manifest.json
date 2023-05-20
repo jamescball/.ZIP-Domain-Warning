@@ -1,0 +1,25 @@
+{
+    "manifest_version": 2,
+    "name": ".ZIP Domain Warning",
+    "version": "1.0",
+    "description": "Redirect all .zip domains to display a prompt warning about the risks of .zip domains.",
+    "icons": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    },
+    "permissions": [
+      "webRequest",
+      "webRequestBlocking",
+      "<all_urls>"
+    ],
+    "background": {
+      "scripts": ["background.js"],
+      "persistent": true
+    },
+    "web_accessible_resources": [
+      "warning.html",
+      "warning.js"
+    ]
+}
+  
