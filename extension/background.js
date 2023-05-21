@@ -1,25 +1,52 @@
-// Variable to keep track of whether .zip domains are blocked
-let blockZipDomains = true;
+const adblockRuleID = 1;
 
-chrome.webRequest.onBeforeRequest.addListener(
-  function(details) {
-    const domain = new URL(details.url).hostname;
-    if (blockZipDomains && domain.endsWith(".zip")) {
-      const warningUrl = chrome.runtime.getURL("warning.html");
-      const originalUrl = details.url;
-      const redirectUrl = warningUrl + "?originalUrl=" + encodeURIComponent(originalUrl);
-      return { redirectUrl };
+function blockZipDomains() {
+  chrome.declarativeNetRequest.updateDynamicRules({
+    removeRuleIds: [adblockRuleID],
+    addRules: [
+        {
+            id: adblockRuleID,
+            priority: 1,
+            condition: {
+                regexFilter: "(.*\\.zip)(.*)",
+                resourceTypes: ["main_frame"],
+            },
+            action: {
+                type: "redirect",
+                redirect: {
+                    regexSubstitution: `chrome-extension://${chrome.runtime.id}/warning.html?originalUrl=\\1`,
+                },
+            },
+        },
+    ],
+});
+}
+
+function unblockZipDomains() {
+  chrome.declarativeNetRequest.updateDynamicRules(
+    {
+      removeRuleIds: [adblockRuleID],
     }
-  },
-  { urls: ["<all_urls>"], types: ["main_frame", "sub_frame"] },
-  ["blocking"]
-);
+  ).then()
+}
+
+chrome.runtime.onInstalled.addListener(() => {
+  blockZipDomains();
+});
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.unblockZipDomains) {
-    blockZipDomains = false;
-    setTimeout(function() {
-      blockZipDomains = true;
-    }, 3000);
+    chrome.declarativeNetRequest.updateDynamicRules(
+      {
+        removeRuleIds: [adblockRuleID],
+      },
+      () => {
+        var blockedUrl = request.blockedUrl;
+        chrome.tabs.update(sender.tab.id, {url: blockedUrl});
+        setTimeout(function() {
+          blockZipDomains();
+        }, 3000);
+      }
+    )
   }
 });
