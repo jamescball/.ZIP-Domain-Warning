@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (continueButton) {
       continueButton.addEventListener("click", function() {
         // Send message to background script to unblock .zip domains
-        chrome.runtime.sendMessage({ unblockZipDomains: true });
+        chrome.runtime.sendMessage({ unblockZipDomains: true, blockedUrl:blockedUrl });
       });
     }
   });
